@@ -89,7 +89,7 @@ public abstract class Person implements java.io.Serializable {
 	 */
 
 	public Person(String FirstName, String MiddleName, String LastName,
-			Date DOB, String Address, String Phone_number, String Email)
+			Date DOB, String Address, String Phone_number, String Email) throws PersonException
 	{
 		this.FirstName = FirstName;
 		this.MiddleName = MiddleName;
@@ -98,6 +98,17 @@ public abstract class Person implements java.io.Serializable {
 		this.address = Address;
 		this.setPhone(Phone_number);
 		this.email_address = Email;
+		Date TestDate = new Date();
+		String regex = "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(Phone_number);
+		
+		if(DOB.getYear() < TestDate.getYear()-100) {
+			throw new PersonException();
+		}if(matcher.matches() == false){
+			throw new PersonException();	
+		}
+		
 		
 	}
 
